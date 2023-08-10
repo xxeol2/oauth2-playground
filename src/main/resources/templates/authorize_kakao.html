@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kakao OAuth Authorization</title>
+</head>
+<body>
+<h1>Kakao OAuth Authorization</h1>
+<form method="get" th:action="@{${kakaoAuthUrl}}">
+  <input name="client_id" th:value="${clientId}" type="hidden"/>
+  <input name="redirect_uri" th:value="${redirectUri}" type="hidden"/>
+  <input name="response_type" th:value="${responseType}" type="hidden"/>
+  <button type="submit">Authorize with Kakao</button>
+</form>
+</body>
+</html>
