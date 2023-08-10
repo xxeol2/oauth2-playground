@@ -12,11 +12,9 @@
 <script th:inline="javascript">
 
   window.onload = function () {
-    const socialType = 'KAKAO';
+    const socialType = [[${socialType}]];
     const targetUri = [[${targetUri}]];
     const code = [[${code}]];
-    console.log(targetUri);
-    console.log(code);
     const requestBody = {socialType, code};
     axios.post(targetUri, requestBody)
     .then(function (response) {
