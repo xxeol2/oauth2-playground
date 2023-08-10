@@ -1,0 +1,4 @@
+[submodule "src/main/resources/oauth2-config"]
+	path = src/main/resources/oauth2-config
+	url = https://github.com/xxeol2/oauth2-config.git
+  branch = main

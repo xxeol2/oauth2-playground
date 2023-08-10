@@ -1,0 +1,31 @@
+<!-- src/main/resources/templates/hi.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Response from /oauth/api/kakao</title>
+</head>
+<body>
+<h1>Response from /oauth/api/kakao</h1>
+<pre id="responseArea"></pre>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script th:inline="javascript">
+
+  window.onload = function () {
+    const socialType = 'KAKAO';
+    const targetUri = [[${targetUri}]];
+    const code = [[${code}]];
+    console.log(targetUri);
+    console.log(code);
+    const requestBody = {socialType, code};
+    axios.post(targetUri, requestBody)
+    .then(function (response) {
+      document.getElementById('responseArea').innerText = JSON.stringify(response.data, null, 2);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  };
+</script>
+</body>
+</html>
