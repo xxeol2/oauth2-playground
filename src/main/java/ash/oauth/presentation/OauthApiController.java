@@ -1,6 +1,6 @@
 package ash.oauth.presentation;
 
-import ash.oauth.application.OAuthService;
+import ash.oauth.application.OauthService;
 import ash.oauth.domain.SocialType;
 import ash.oauth.dto.LoginRequest;
 import ash.oauth.dto.LoginResponse;
@@ -16,24 +16,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/oauth/api")
-public class OAuthApiController {
+public class OauthApiController {
 
-    private final OAuthService oAuthService;
+    private final OauthService oauthService;
 
-    public OAuthApiController(OAuthService oAuthService) {
-        this.oAuthService = oAuthService;
+    public OauthApiController(OauthService oauthService) {
+        this.oauthService = oauthService;
     }
 
     @GetMapping("/redirect/{socialType}")
-    public ResponseEntity<Void> oathRedirectUri(@PathVariable SocialType socialType, HttpServletResponse response)
+    public ResponseEntity<Void> redirectToAuthUri(@PathVariable SocialType socialType, HttpServletResponse response)
         throws IOException {
-        String kakaoAuthUri = oAuthService.redirect(socialType);
-        response.sendRedirect(kakaoAuthUri);
+        String authUri = oauthService.redirect(socialType);
+        response.sendRedirect(authUri);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
-        return oAuthService.login(request);
+        return oauthService.login(request);
     }
 }

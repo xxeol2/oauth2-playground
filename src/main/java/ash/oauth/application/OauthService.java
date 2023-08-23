@@ -10,12 +10,12 @@ import ash.oauth.dto.UserInfo;
 import org.springframework.stereotype.Service;
 
 @Service
-public class OAuthService {
+public class OauthService {
 
     private final Oauth2Clients oauth2Clients;
     private final MemberRepository memberRepository;
 
-    public OAuthService(Oauth2Clients oauth2Clients, MemberRepository memberRepository) {
+    public OauthService(Oauth2Clients oauth2Clients, MemberRepository memberRepository) {
         this.oauth2Clients = oauth2Clients;
         this.memberRepository = memberRepository;
     }

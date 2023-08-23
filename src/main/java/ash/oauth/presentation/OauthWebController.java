@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/oauth")
-public class OAuthWebController {
+public class OauthWebController {
 
     @GetMapping("/login")
-    public String redirectToOAuth(Model model) {
+    public String login(Model model) {
         String targetUri = "/oauth/api/redirect";
 
         model.addAttribute("targetUri", targetUri);
         model.addAttribute("socialTypes", SocialType.values());
-        return "redirect";
+        return "login";
     }
 
     @GetMapping("/{socialType}/redirect")
