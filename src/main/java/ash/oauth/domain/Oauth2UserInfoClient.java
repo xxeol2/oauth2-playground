@@ -1,29 +1,37 @@
-package ash.oauth.infrastructure.google;
+package ash.oauth.domain;
 
 import ash.oauth.dto.UserInfo;
-import ash.oauth.dto.google.GoogleUserInfoResponse;
+import ash.oauth.dto.UserInfoResponse;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Component;
 
-@Component
-public class GoogleOauth2UserInfoClient {
+public class Oauth2UserInfoClient {
 
-    private static final String REQUEST_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
+    private final Oauth2Property oauth2Property;
+
+    public Oauth2UserInfoClient(Oauth2Property oauth2Property) {
+        this.oauth2Property = oauth2Property;
+    }
 
     public UserInfo request(String accessToken) {
         HttpHeaders headers = getHttpHeaders(accessToken);
-        GoogleUserInfoResponse response = new RestTemplateBuilder()
+
+        UserInfoResponse response = new RestTemplateBuilder()
             .build()
             .exchange(
-                REQUEST_URL,
+                oauth2Property.provider().userInfoUri(),
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                GoogleUserInfoResponse.class
+                oauth2Property.socialType().getUserInfoResponse()
             )
             .getBody();
+
+        if (response == null) {
+            throw new IllegalArgumentException("소셜의 UserInfo 응답값이 잘못되었습니다.");
+        }
+
         return response.toUserInfo();
     }
 
