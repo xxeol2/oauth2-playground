@@ -1,6 +1,6 @@
 package ash.oauth.config;
 
-import ash.oauth.domain.Oauth2Clients;
+import ash.oauth.domain.Oauth2Client;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ public class Oauth2Config {
     }
 
     @Bean
-    public Oauth2Clients oauth2Clients() {
-        return new Oauth2Clients(oauth2ConfigProperties.getOauth2Properties());
+    public Oauth2Client oauth2Client() {
+        return new Oauth2Client(oauth2ConfigProperties.getOauth2Properties());
     }
 }

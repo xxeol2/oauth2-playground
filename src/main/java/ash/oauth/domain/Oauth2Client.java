@@ -1,21 +1,19 @@
 package ash.oauth.domain;
 
 import ash.oauth.dto.UserInfo;
+import java.util.Map;
 import org.springframework.web.util.UriComponentsBuilder;
 
 public class Oauth2Client {
 
-    private final Oauth2Property property;
-    private final Oauth2TokenClient tokenClient;
-    private final Oauth2UserInfoClient userInfoClient;
+    private final Map<SocialType, Oauth2Property> properties;
 
-    public Oauth2Client(Oauth2Property property) {
-        this.property = property;
-        this.tokenClient = new Oauth2TokenClient(property);
-        this.userInfoClient = new Oauth2UserInfoClient(property);
+    public Oauth2Client(Map<SocialType, Oauth2Property> properties) {
+        this.properties = properties;
     }
 
-    public String getRedirectUri() {
+    public String getAuthUri(SocialType socialType) {
+        Oauth2Property property = getProperty(socialType);
         return UriComponentsBuilder.fromHttpUrl(property.provider().authUri())
             .queryParam("client_id", property.environment().clientId())
             .queryParam("redirect_uri", property.environment().redirectUri())
@@ -25,11 +23,13 @@ public class Oauth2Client {
             .toUriString();
     }
 
-    public String requestToken(String code) {
-        return tokenClient.request(code);
+    public UserInfo requestUserInfo(SocialType socialType, String code) {
+        Oauth2Property property = getProperty(socialType);
+        String accessToken = Oauth2TokenClient.request(property, code);
+        return Oauth2UserInfoClient.request(property, accessToken);
     }
 
-    public UserInfo requestUserInfo(String accessToken) {
-        return userInfoClient.request(accessToken);
+    private Oauth2Property getProperty(SocialType socialType) {
+        return properties.get(socialType);
     }
 }

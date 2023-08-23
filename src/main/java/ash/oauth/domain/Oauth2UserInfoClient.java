@@ -9,22 +9,16 @@ import org.springframework.http.HttpMethod;
 
 public class Oauth2UserInfoClient {
 
-    private final Oauth2Property oauth2Property;
-
-    public Oauth2UserInfoClient(Oauth2Property oauth2Property) {
-        this.oauth2Property = oauth2Property;
-    }
-
-    public UserInfo request(String accessToken) {
+    public static UserInfo request(Oauth2Property property, String accessToken) {
         HttpHeaders headers = getHttpHeaders(accessToken);
 
         UserInfoResponse response = new RestTemplateBuilder()
             .build()
             .exchange(
-                oauth2Property.provider().userInfoUri(),
+                property.provider().userInfoUri(),
                 HttpMethod.GET,
                 new HttpEntity<>(headers),
-                oauth2Property.socialType().getUserInfoResponse()
+                property.socialType().getUserInfoResponse()
             )
             .getBody();
 
@@ -35,7 +29,7 @@ public class Oauth2UserInfoClient {
         return response.toUserInfo();
     }
 
-    private HttpHeaders getHttpHeaders(String accessToken) {
+    private static HttpHeaders getHttpHeaders(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
         return headers;

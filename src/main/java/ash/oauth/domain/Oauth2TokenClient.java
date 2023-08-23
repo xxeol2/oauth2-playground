@@ -13,22 +13,16 @@ public class Oauth2TokenClient {
 
     private static final String GRANT_TYPE = "authorization_code";
 
-    private final Oauth2Property oauth2Property;
-
-    public Oauth2TokenClient(Oauth2Property oauth2Property) {
-        this.oauth2Property = oauth2Property;
-    }
-
-    public String request(String code) {
+    public static String request(Oauth2Property property, String code) {
         HttpHeaders headers = getRequestHeader();
-        MultiValueMap<String, String> body = getRequestBody(code);
+        MultiValueMap<String, String> body = getRequestBody(property, code);
 
         TokenResponse response = new RestTemplateBuilder()
             .build()
             .postForEntity(
-                oauth2Property.provider().tokenUri(),
+                property.provider().tokenUri(),
                 new HttpEntity<>(body, headers),
-                oauth2Property.socialType().getTokenResponse()
+                property.socialType().getTokenResponse()
             ).getBody();
 
         if (response == null) {
@@ -38,15 +32,15 @@ public class Oauth2TokenClient {
         return response.toAccessToken();
     }
 
-    private HttpHeaders getRequestHeader() {
+    private static HttpHeaders getRequestHeader() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         return headers;
     }
 
-    private MultiValueMap<String, String> getRequestBody(String code) {
+    private static MultiValueMap<String, String> getRequestBody(Oauth2Property property, String code) {
         MultiValueMap<String, String> formData = new LinkedMultiValueMap<>();
-        EnvironmentProperties environment = oauth2Property.environment();
+        EnvironmentProperties environment = property.environment();
         formData.add("grant_type", GRANT_TYPE);
         formData.add("client_id", environment.clientId());
         formData.add("client_secret", environment.clientSecret());
