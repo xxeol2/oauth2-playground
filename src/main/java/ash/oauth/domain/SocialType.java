@@ -6,6 +6,8 @@ import ash.oauth.dto.google.GoogleTokenResponse;
 import ash.oauth.dto.google.GoogleUserInfoResponse;
 import ash.oauth.dto.kakao.KakaoTokenResponse;
 import ash.oauth.dto.kakao.KakaoUserInfoResponse;
+import ash.oauth.dto.naver.NaverTokenResponse;
+import ash.oauth.dto.naver.NaverUserInfoResponse;
 
 public enum SocialType {
     KAKAO(
@@ -14,7 +16,12 @@ public enum SocialType {
     ),
     GOOGLE(
         GoogleTokenResponse.class,
-        GoogleUserInfoResponse.class),
+        GoogleUserInfoResponse.class
+    ),
+    NAVER(
+        NaverTokenResponse.class,
+        NaverUserInfoResponse.class
+    ),
     ;
 
     private final Class<? extends TokenResponse> tokenResponse;
