@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties(prefix = "oauth2")
-public class Oauth2ConfigProperties {
+public class Oauth2Properties {
 
     private final Map<SocialType, EnvironmentProperties> environment = new HashMap<>();
     private final Map<SocialType, ProviderProperties> provider = new HashMap<>();

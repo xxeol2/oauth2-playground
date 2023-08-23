@@ -6,17 +6,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties(Oauth2ConfigProperties.class)
+@EnableConfigurationProperties(Oauth2Properties.class)
 public class Oauth2Config {
 
-    private final Oauth2ConfigProperties oauth2ConfigProperties;
+    private final Oauth2Properties oauth2Properties;
 
-    public Oauth2Config(Oauth2ConfigProperties oauth2ConfigProperties) {
-        this.oauth2ConfigProperties = oauth2ConfigProperties;
+    public Oauth2Config(Oauth2Properties oauth2Properties) {
+        this.oauth2Properties = oauth2Properties;
     }
 
     @Bean
     public Oauth2Client oauth2Client() {
-        return new Oauth2Client(oauth2ConfigProperties.getOauth2Properties());
+        return new Oauth2Client(oauth2Properties.getOauth2Properties());
     }
 }
