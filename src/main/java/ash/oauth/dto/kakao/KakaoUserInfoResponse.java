@@ -2,6 +2,7 @@ package ash.oauth.dto.kakao;
 
 import ash.oauth.domain.SocialType;
 import ash.oauth.dto.UserInfo;
+import ash.oauth.dto.UserInfoResponse;
 import ash.oauth.dto.kakao.KakaoUserInfoResponse.KakaoAccount.Profile;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,8 +10,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record KakaoUserInfoResponse(
     String id,
     @JsonProperty("kakao_account") KakaoAccount kakaoAccount
-) {
+) implements UserInfoResponse {
 
+    @Override
     public UserInfo toUserInfo() {
         Profile profile = kakaoAccount.profile;
         return new UserInfo(

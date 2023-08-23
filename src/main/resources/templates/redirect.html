@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Thymeleaf Button Example</title>
+  <style>
+    .button-container {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+<div class="button-container" th:each="socialType : ${socialTypes}">
+  <button th:attr="onclick='sendRequest(\'' + ${socialType} + '\')'">요청 보내기 - [[${socialType}]]
+  </button>
+</div>
+
+<script th:inline="javascript">
+  function sendRequest(socialType) {
+    window.location.href = [[${targetUri}]] + `/${socialType}`;
+  }
+</script>
+</body>
+</html>

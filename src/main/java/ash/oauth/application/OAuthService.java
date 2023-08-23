@@ -3,6 +3,7 @@ package ash.oauth.application;
 import ash.oauth.domain.Member;
 import ash.oauth.domain.MemberRepository;
 import ash.oauth.domain.Oauth2Clients;
+import ash.oauth.domain.SocialType;
 import ash.oauth.dto.LoginRequest;
 import ash.oauth.dto.LoginResponse;
 import ash.oauth.dto.UserInfo;
@@ -17,6 +18,10 @@ public class OAuthService {
     public OAuthService(Oauth2Clients oauth2Clients, MemberRepository memberRepository) {
         this.oauth2Clients = oauth2Clients;
         this.memberRepository = memberRepository;
+    }
+
+    public String redirect(SocialType socialType) {
+        return oauth2Clients.getRedirectUri(socialType);
     }
 
     public LoginResponse login(LoginRequest request) {

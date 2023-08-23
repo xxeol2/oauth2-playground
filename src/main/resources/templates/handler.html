@@ -2,10 +2,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Response from /oauth/api/kakao</title>
+  <title>Response from /oauth/api/<span th:text="${socialType}"></span></title>
 </head>
 <body>
-<h1>Response from /oauth/api/kakao</h1>
+<h1>Response from /oauth/api/<span th:text="${socialType}"></span></h1>
 <pre id="responseArea"></pre>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
